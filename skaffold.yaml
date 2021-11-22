@@ -1,0 +1,17 @@
+apiVersion: skaffold/v2beta26
+kind: Config
+metadata:
+  name: skaffold-helm
+deploy:
+  kubectl:
+    manifests:
+    - httpd.yml
+  helm:
+    releases:
+      - name: nginx-ingress
+        remoteChart: nginx-ingress-controller
+        repo: https://charts.bitnami.com/bitnami
+        setValues:
+          service.enableHttps: false
+          service.type: NodePort
+          service.nodePorts.http: 30600
